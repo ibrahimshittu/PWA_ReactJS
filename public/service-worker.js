@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cache-v1';
+const CACHE_NAME = 'v1';
 const urlsToCache = ['index.html', 'offline.html' ]
 
 const self = this;
@@ -8,6 +8,7 @@ self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then(function(cache) {
+            console.log("open cache");
             return cache.addAll(urlsToCache);
         })
     );
