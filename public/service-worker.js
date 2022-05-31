@@ -1,5 +1,5 @@
 const CACHE_NAME = 'v1';
-const urlsToCache = ['index.html', 'offline.html' ]
+const urlsToCache = ['index.html', 'offline.html', '/static/js/bundle.js']
 
 const self = this;
 
