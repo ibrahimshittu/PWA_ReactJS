@@ -43,11 +43,13 @@
         navigator.serviceWorker.register('./service-worker.js')
           .then((reg) => {
             console.log('Success: ', reg)
-            return reg.pushManager.getSubscription()
+            reg.pushManager.getSubscription()
               .then(function (subscription) {
                 reg.pushManager.subscribe({
                   userVisibleOnly: true,
                   applicationServerKey: determineAppServerKey()
+                }).then((sub) => {
+                  console.log("sub", sub.endpoint)
                 })
               }).catch((err) => console.log('Failure: ', err))
           })
