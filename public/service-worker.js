@@ -3,6 +3,7 @@ const urlsToCache = ['index.html', 'offline.html', '/static/js/bundle.js']
 
 const self = this;
 
+
 // Install service worker
 self.addEventListener('install', function(event) {
     event.waitUntil(
@@ -14,8 +15,17 @@ self.addEventListener('install', function(event) {
     );
 });
 
+
 // Listen for requests
 self.addEventListener('fetch', (event) => {
+    if (event.request.url === "http://localhost:3000/static/js/main.chunk.js") {
+        event.waitUntil(
+            this.registration.showNotification("Internet", {
+                body: "internet not working",
+            })
+        )
+    }
+
     event.respondWith(
         caches.match(event.request)
         .then(() => {
@@ -23,7 +33,19 @@ self.addEventListener('fetch', (event) => {
             .catch(() => caches.match('offline.html'));
         })
     )
-});
+}); 
+
+// show notification
+// self.addEventListener('push', function(event) {
+//     console.log('[Service Worker] Push Received.');
+//     console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+//     const title = 'Title';
+    
+
+//     event.waitUntil(self.registration.showNotification(title, options));
+// })
+
 
 // Activate service worker
 self.addEventListener('activate', (event) => {
@@ -42,3 +64,4 @@ self.addEventListener('activate', (event) => {
         })
     );
 });
+
